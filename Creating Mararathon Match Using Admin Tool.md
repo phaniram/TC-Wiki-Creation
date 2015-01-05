@@ -7,7 +7,7 @@ This is a guide to teach you how to create marathon matches using `Admin Tool`.
 
 1. Run `admin.bat` for Windows or `admin.sh` for Linux.
 2. Login using your credentials.
- ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_login.PNG "Login")
+ * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_login.PNG "Login")
 3. Click `"Actions" -> "Contest Management..."` in the menu. Then click `Add` button. 
  ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_contest_management.PNG "Contest Management")
 4. Enter any name on the `Name` field. Then click `Apply`. 
