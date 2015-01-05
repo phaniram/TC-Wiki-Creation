@@ -43,8 +43,8 @@ This is a guide to teach you how to create marathon matches using `Admin Tool`.
 1. Click `"File" -> "Load Round access..."` in the menu.
  * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_load_contest.png "Load contest")
 2. Select the newly created contest then click `Select`. A message will appear saying "Change round successful".
- * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_change_round_message.PNG "Select Round")
  * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_change_round.PNG "Change round successful")
+ * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_change_round_message.PNG "Select Round")
 3. In the main menu, click `"Run contest" -> "Before contest" -> "Set Round Terms..."`.
  * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_run_contest.png "Run Contest")
 4. In the opened dialog, click `OK`.
