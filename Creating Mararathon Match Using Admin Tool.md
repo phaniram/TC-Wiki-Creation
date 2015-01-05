@@ -28,7 +28,7 @@ This is a guide to teach you how to create marathon matches using `Admin Tool`.
  5. Click `OK` button.
    * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_round_segments.PNG "Admin Round Segments window")
 10. Click the `Problems` button, on the `Round Problem Frame` window:
-  * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_round_problems.PNG "Problems button")
+ ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_round_problems.PNG "Problems button")
  1. Select an available problem and click the `Assign` button.
     * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_round_problem_frame.PNG "Select problem then assign")
  3. Select the `Division`.
