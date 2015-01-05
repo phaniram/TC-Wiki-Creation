@@ -7,7 +7,8 @@ This is a guide to teach you how to create marathon matches using `Admin Tool`.
 
 1. Run `admin.bat` for Windows or `admin.sh` for Linux.
 2. Login using your credentials.
- * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_login.PNG "Login")
+
+![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_login.PNG "Login")
 3. Click `"Actions" -> "Contest Management..."` in the menu. Then click `Add` button. 
  * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_contest_management.PNG "Contest Management")
 4. Enter any name on the `Name` field. Then click `Apply`. 
@@ -26,6 +27,7 @@ This is a guide to teach you how to create marathon matches using `Admin Tool`.
  3. Change `Registration Length` and `Coding Length` to 10000.
  4. Change `Intermission Length` and `Challenge Length` to 0.
  5. Click `OK` button.
+ 
  ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_round_segments.PNG "Admin Round Segments window")
 10. Click the `Problems` button, on the `Round Problem Frame` window:
 ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-admintool/admin_round_problems.PNG "Problems button")
