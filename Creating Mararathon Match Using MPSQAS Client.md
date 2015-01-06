@@ -20,7 +20,7 @@ This is a guide to teach you how to create marathon matches using `MPSQA Tool`.
 ## Approving a Problem (for Admin Role)
 1. Login using your credentials. Make sure that `Use SSL` is unchecked.
 2. To open pending problems, in the menu click `"Admin" -> "Pending Long Problems"` then you will see a list of `Pending Proposals`. Select a problem in the list then click `View Problem.`
-  * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_prending_proposals.png "Pending Proposals")
+  * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_pending_proposals.png "Pending Proposals")
 3. Alternatively, you can just type the problem name on the `Search Box` then click `Go`.
   * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_search.png "Search")
 4. With the Problem opened:
@@ -28,7 +28,7 @@ This is a guide to teach you how to create marathon matches using `MPSQA Tool`.
   2. Change the `Status`, for this example we change it to `Final Testing`.
   3. On `Problem Testers`, choose from the `Available Testers` then click `Add`, those testers will be added on the `Scheduled Testers` list.
   4. Click the `Save Changes` button. <strong>* NOTE: NEVER CLICK THE SUBMIT BUTTON. *</strong>
-   * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_problem_approve.png "Problem Approve")
+    * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_problem_approve.png "Problem Approve")
 
 ## Modifying and Testing the Approved Problem.
 1. In this step, we assume that the problem is already approved. On the menu, click `"Problems -> Main Long Problem Room"`, you will see your created problem already approved(in this example it's in Final Testing).
@@ -36,20 +36,20 @@ This is a guide to teach you how to create marathon matches using `MPSQA Tool`.
   * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_problem_final.png "Problem Status")
 3. In the `Statement Editor` tab: 
   1. Check the `Simple Math` category. Then click `Save Statement` button. <strong>NOTE: If you can't see the checkboxes try resizing the window.</strong>
-   * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_simple_math.png "Simple Math")
+    * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_simple_math.png "Simple Math")
   2. Change problem statement part to `Methods`.
-   * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_methods.png "Methods")
+    * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_methods.png "Methods")
   3. Modify `Method Name`, `Parameters` and `Returns`, click `Add Method` then click `Save Statement`.
-   * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_method_save.png "Modify Method")
+    * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_method_save.png "Modify Method")
   4. Change problem statement part to `Introduction`. Fill the textarea, when you're done click `Save Statement`.
-   * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_introduction.png "Introductiom")
+    * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_introduction.png "Introductiom")
 4. In the `Test Data` tab:
   1. Add new test cases by clicking the `New` button. Try adding 6 Test Cases.
   2. Modify the parameters, in this example our parameter is a String. Set it to "1","2","3","1","2","3". (Don't forget the double quotes).
    * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_test_string1.png "String Parameter 1")
    * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_test_string2.png "String Parameter 2")
   3. Check the first 3 test cases as `Example` (Don't mark any test case as `System`). Then click `Save Statement` button.
-   * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_test_example.png "Check firs 3 Test Case as Example")
+    * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_test_example.png "Check firs 3 Test Case as Example")
 5. In the `Solution` tab:
   1. Enter or paste your code in the editor then click the `Compile` button.
    * ![alt text](https://github.com/macs054/TC-Wiki-Creation/blob/master/img-wiki/marathon-mpsqa/mpsqa_compile.png "Compile")
