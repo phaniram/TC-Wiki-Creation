@@ -1,7 +1,7 @@
-Creating Mararathon Match Using MPSQA Tool
+Creating Mararathon Match Using MPSQAS Tool
 ================
 
-This is a guide to teach you how to create marathon matches using `MPSQA Tool`. 
+This is a guide to teach you how to create marathon matches using `MPSQAS Tool`. 
 
 ## Creating a contest
 
