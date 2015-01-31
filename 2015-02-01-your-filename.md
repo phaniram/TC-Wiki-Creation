@@ -24,8 +24,8 @@ This is a guide to teach you how to use IdolOnDemand SentimentAnalysis API on Tw
 
 * Create a new "Dynamic Web Project" in Eclipse   
 
-- Create "VerticaDBUtil.java"   
-  Edit DB_CONNECTION according to your _VMIP_ and _VMVERTICADBNAME_
+- Create "**VerticaDBUtil.java**"   
+  Edit **DB_CONNECTION** according to your **VM_IP** and **VM_VERTICA_DB_NAME**
 
 
 	import java.sql.Connection;
@@ -314,4 +314,156 @@ This is a guide to teach you how to use IdolOnDemand SentimentAnalysis API on Tw
 		}
 
 	}
+
+
+- Create a new servlet "SentimentDataRetriever.java"  
+
+
+	import java.io.IOException;
+	import java.io.PrintWriter;
+	import java.sql.Connection;
+	import java.sql.PreparedStatement;
+	import java.sql.ResultSet;
+	import java.sql.SQLException;
+
+	import javax.servlet.ServletException;
+	import javax.servlet.annotation.WebServlet;
+	import javax.servlet.http.HttpServlet;
+	import javax.servlet.http.HttpServletRequest;
+	import javax.servlet.http.HttpServletResponse;
+
+	import org.json.simple.JSONArray;
+	import org.json.simple.JSONObject;
+
+	import com.cypronmaya.jdbc.VerticaDBUtil;
+
+	/**
+	 * Servlet implementation class SentimentDataRetriever
+	 */
+	@WebServlet("/SentimentDataRetriever")
+	public class SentimentDataRetriever extends HttpServlet {
+		private static final long serialVersionUID = 1L;
+
+	    public SentimentDataRetriever() {
+	    }
+
+		@SuppressWarnings("unchecked")
+		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			String searchText = request.getParameter("searchText");
+	        Connection conn;
+			try {
+				conn = VerticaDBUtil.getDBConnection();
+		        PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM TWEET_SENTIMENT WHERE SEARCH_TEXT = ? ORDER BY CREATED_AT ASC");
+		        pstmt.setString(1, searchText);
+		        ResultSet rs = pstmt.executeQuery();
+		        JSONArray tweetSentiments = new JSONArray();
+		        while (rs.next()) {
+		        	JSONObject tweetSentiment = new JSONObject();
+		        	tweetSentiment.put("SCREEN_NAME", rs.getString("SCREEN_NAME"));
+		        	tweetSentiment.put("CREATED_AT", rs.getTimestamp("CREATED_AT").getTime());
+		        	tweetSentiment.put("AGG_SENTIMENT", rs.getString("AGG_SENTIMENT"));
+		        	tweetSentiment.put("AGG_SCORE", Double.parseDouble(rs.getString("AGG_SCORE")));
+		        	tweetSentiment.put("TEXT", rs.getString("TEXT"));
+		        	tweetSentiments.add(tweetSentiment);
+		        }
+		        
+		        VerticaDBUtil.closeDBUtil(rs, pstmt, conn);
+		        response.setContentType("application/json");
+			     PrintWriter out = response.getWriter();
+			     out.print(tweetSentiments);
+			     out.flush();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}		
+		}
+
+		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			doGet(request,response);
+		}
+
+	}
+
+- Create "index.html" in WebContent folder
+
+
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<meta charset="UTF-8">
+	<title>IdolOnDemand Sentiment Analysis</title>
+	<script src="https://code.jquery.com/jquery-2.1.3.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://code.highcharts.com/highcharts-more.js"></script>
+	</head>
+	<body>
+		<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+	<script type="text/javascript">
+
+	loadSentimentData("$HPQ");
+
+	function loadSentimentData(searchTxt){
+		$.getJSON( "SentimentDataRetriever", { searchText: searchTxt})
+		.done(function( data ) {
+			var tweetSentimentData = [];
+			  $.each( data, function( i, tweetSentiment ) {
+				  tweetSentimentData.push([tweetSentiment.CREATED_AT,tweetSentiment.AGG_SCORE]);
+			  });
+			$(function () {
+			    $('#container').highcharts({
+			        chart: {
+			            type: 'spline',
+			            zoomType: 'x'
+			        },
+			        title: {
+			            text: 'IdolOnDemand Sentiment Analysis'
+			        },
+			        subtitle: {
+			            text: "Search Text : " + searchTxt
+			        },
+			        xAxis: {
+			            type: 'datetime',
+			            dateTimeLabelFormats: { 
+			            	minute: '%H:%M',
+			            	hour: '%H:%M',
+			            	day: '%e. %b',
+			            	week: '%e. %b',
+			            	month: '%b \'%y',
+			            	year: '%Y'
+			            },
+			            title: {
+			                text: 'DateTime'
+			            }
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'Sentiment Score'
+			            }        },
+			        tooltip: {
+			            headerFormat: '<b>{series.name}</b><br>',
+			            pointFormat: '{point.x:%e %b %H:%M}: {point.y:.4f}'
+			        },
+					credts: { enabled: false},
+					legend: { enabled: false},			
+			        plotOptions: {
+			            spline: {
+			                marker: {
+			                    enabled: true
+			                }
+			            }
+			        },
+			        series: [{
+			            name: 'TweetSentiments',
+			            negativeColor: '#0F0F0F',
+			            data: tweetSentimentData
+			        }]
+			    });
+			});
+		});
+	};
+	</script>
+	</body>
+	</html>
+
+Run the application
 
