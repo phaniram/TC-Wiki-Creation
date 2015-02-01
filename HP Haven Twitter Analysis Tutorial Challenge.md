@@ -483,4 +483,24 @@ Running the application upon opening "index.html" would produce a graph on Tweet
 
 ![tweetsentimentgraph](https://cloud.githubusercontent.com/assets/231750/5991252/a912049e-aa07-11e4-907e-2b865b0d8c03.png)
 
+Modify index.html to following 
+
+
+			  tweetSentimentData.push({
+				  	x: tweetSentiment.CREATED_AT,
+				  	y: tweetSentiment.AGG_SCORE,
+					name: tweetSentiment.SCREEN_NAME,
+					tweet: tweetSentiment.TEXT,
+					sentiment: tweetSentiment.AGG_SENTIMENT
+				  	});
+-----------------------------------------------                    
+		        tooltip: {
+		            headerFormat: '<b>@{point.key}</b> {point.x:%e %b %H:%M}<br>',
+		            pointFormat: '{point.tweet}<br/>Score : <b>{point.y:.4f}</b>'
+		        },
+
+You can now even see the tweet at that point, and screen name.
+
+![tweetdatasentimentgraph](https://cloud.githubusercontent.com/assets/231750/5993354/ead2e5a8-aa73-11e4-9a85-30c1405c55f0.png)
+
 
