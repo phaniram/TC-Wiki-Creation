@@ -37,12 +37,11 @@ This is a guide to teach you how to use IdolOnDemand SentimentAnalysis API on Tw
 
 1. Create a new "Dynamic Web Project" in Eclipse   
 
-Add following files to the project.
+  Add following files to the project.
 
 - Create "**VerticaDBUtil.java**"   
-  Edit **DB_CONNECTION** according to your **VM_IP** and **VM_VERTICA_DB_NAME**.
+  Edit **DB_CONNECTION** according to your **VM_IP** and **VM_VERTICA_DB_NAME**.  
   This Class helps us to get DB Connection to run queries on VerticaDB.
-
 
 
         import java.sql.Connection;
@@ -58,7 +57,7 @@ Add following files to the project.
 
         private static Connection conn;
         private static final String DB_DRIVER = "com.vertica.jdbc.Driver";
-        private static final String DB_CONNECTION = "jdbc:vertica://10.0.0.6:5433/TWIT_DB";
+        private static final String DB_CONNECTION = "jdbc:vertica://<VM_IP>:5433/VM_VERTICA_DB_NAME";
         private static final String DB_USER = "dbadmin";
         private static final String DB_PASSWORD = "password";
 
@@ -186,7 +185,7 @@ Add following files to the project.
 
 
 - Create "**IdolOnDemand.java**"    
-  Replace <API_KEY> with IdolOnDemand API Key
+  Replace API_KEY with IdolOnDemand API Key
 
 
         import java.io.BufferedReader;
@@ -262,10 +261,10 @@ Add following files to the project.
 - Create "**App.java**". Replace
 		    
 
-_CONSUMERKEY -> Consumer Key (API Key)	
-CONSUMERSECRET -> Consumer Secret (API Secret)	
-ACCESSTOKEN -> Access Token	
-ACCESSTOKENSECRET -> Access Token Secret_
+CONSUMER_KEY -> Consumer Key (API Key)	
+CONSUMER_SECRET -> Consumer Secret (API Secret)	 
+ACCESS_TOKEN -> Access Token	
+ACCESS_TOKEN_SECRET -> Access Token Secret  
 
 
 
