@@ -140,27 +140,25 @@ Add following files to the project.
                 ex.printStackTrace();
             }
         }
-    }
+     }
 
 
 - Create "**TweetSentimentTabUtil.java**"   
 
 
+        import java.sql.Connection;
+        import java.sql.PreparedStatement;
+        import java.sql.ResultSet;
+        import java.sql.SQLException;
+        import java.sql.Statement;
 
-    import java.sql.Connection;
-    import java.sql.PreparedStatement;
-    import java.sql.ResultSet;
-    import java.sql.SQLException;
-    import java.sql.Statement;
+        import com.cypronmaya.jdbc.VerticaDBUtil;
 
-    import com.cypronmaya.jdbc.VerticaDBUtil;
+        import twitter4j.Status;
 
-    import twitter4j.Status;
+        //DAO for TweetSentiment Table in Vertica DB
 
-    /*
-     * DAO for TweetSentiment Table in Vertica DB
-     */
-    public class TweetSentimentTabUtil {
+        public class TweetSentimentTabUtil {
         
         //Creates a Tweet Sentiment record
         public int createTweetSentimentEntry(Status tweet, String searchText, String sentiment, String score) throws Exception {
@@ -184,27 +182,27 @@ Add following files to the project.
                 VerticaDBUtil.closeDBUtil(null, pstmt, conn);
                 return result;
             }
-    }
+            }
 
 
 - Create "**IdolOnDemand.java**"    
   Replace <API_KEY> with IdolOnDemand API Key
 
 
-    import java.io.BufferedReader;
-    import java.io.IOException;
-    import java.io.InputStream;
-    import java.io.InputStreamReader;
-    import java.io.Reader;
-    import java.net.URL;
-    import java.net.URLEncoder;
-    import java.nio.charset.Charset;
-    import java.util.HashMap;
+        import java.io.BufferedReader;
+        import java.io.IOException;
+        import java.io.InputStream;
+        import java.io.InputStreamReader;
+        import java.io.Reader;
+        import java.net.URL;
+        import java.net.URLEncoder;
+        import java.nio.charset.Charset;
+        import java.util.HashMap;
 
-    import org.json.simple.JSONObject;
-    import org.json.simple.JSONValue;
+        import org.json.simple.JSONObject;
+        import org.json.simple.JSONValue;
 
-    public class IdolOnDemand {
+        public class IdolOnDemand {
 
         private static String apikey = <API_KEY>;
 
@@ -258,7 +256,7 @@ Add following files to the project.
                 return null;
             }
         }
-    }
+        }
 
 
 - Create "**App.java**". Replace
@@ -271,22 +269,20 @@ Add following files to the project.
 
 
 
-    import java.util.ArrayList;
-    import java.util.HashMap;
-    import java.util.List;
+        import java.util.ArrayList;
+        import java.util.HashMap;
+        import java.util.List;
 
-    import twitter4j.Query;
-    import twitter4j.QueryResult;
-    import twitter4j.Status;
-    import twitter4j.Twitter;
-    import twitter4j.TwitterException;
-    import twitter4j.TwitterFactory;
-    import twitter4j.auth.AccessToken;
+        import twitter4j.Query;
+        import twitter4j.QueryResult;
+        import twitter4j.Status;
+        import twitter4j.Twitter;
+        import twitter4j.TwitterException;
+        import twitter4j.TwitterFactory;
+        import twitter4j.auth.AccessToken;
 
-    /*
-     * Main App that fetches tweets and run sentiment analysis , store them to Vertica DB
-     */
-    public class App {
+        //Main App that fetches tweets and run sentiment analysis , store them to Vertica DB
+        public class App {
 
         public static void main(String[] args) {        
             String searchText = "$AMZN";
@@ -330,35 +326,33 @@ Add following files to the project.
                 System.exit(-1);
             }
         }
-    }
+        }
 
 
 - Create a new servlet "**SentimentDataRetriever.java**"  
 
 
-    import java.io.IOException;
-    import java.io.PrintWriter;
-    import java.sql.Connection;
-    import java.sql.PreparedStatement;
-    import java.sql.ResultSet;
-    import java.sql.SQLException;
+        import java.io.IOException;
+        import java.io.PrintWriter;
+        import java.sql.Connection;
+        import java.sql.PreparedStatement;
+        import java.sql.ResultSet;
+        import java.sql.SQLException;
 
-    import javax.servlet.ServletException;
-    import javax.servlet.annotation.WebServlet;
-    import javax.servlet.http.HttpServlet;
-    import javax.servlet.http.HttpServletRequest;
-    import javax.servlet.http.HttpServletResponse;
+        import javax.servlet.ServletException;
+        import javax.servlet.annotation.WebServlet;
+        import javax.servlet.http.HttpServlet;
+        import javax.servlet.http.HttpServletRequest;
+        import javax.servlet.http.HttpServletResponse;
 
-    import org.json.simple.JSONArray;
-    import org.json.simple.JSONObject;
+        import org.json.simple.JSONArray;
+        import org.json.simple.JSONObject;
 
-    import com.cypronmaya.jdbc.VerticaDBUtil;
+        import com.cypronmaya.jdbc.VerticaDBUtil;
 
-    /**
-     * Servlet to retrieve SentimentData on given text.
-     */
-    @WebServlet("/SentimentDataRetriever")
-    public class SentimentDataRetriever extends HttpServlet {
+        //Servlet to retrieve SentimentData on given text.
+        @WebServlet("/SentimentDataRetriever")
+        public class SentimentDataRetriever extends HttpServlet {
         private static final long serialVersionUID = 1L;
 
         public SentimentDataRetriever() {
@@ -401,36 +395,36 @@ Add following files to the project.
         protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             doGet(request,response);
         }
-    }
+        }
 
 
 - Create "**index.html**" in WebContent folder
 
 
-    <!DOCTYPE html>
-    <html>
-    <head>
-    <meta charset="UTF-8">
-    <title>IdolOnDemand Sentiment Analysis</title>
-    <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
-    <script src="http://code.highcharts.com/highcharts.js"></script>
-    <script src="http://code.highcharts.com/highcharts-more.js"></script>
-    </head>
-    <body>
+        <!DOCTYPE html>
+        <html>
+        <head>
+        <meta charset="UTF-8">
+        <title>IdolOnDemand Sentiment Analysis</title>
+        <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="http://code.highcharts.com/highcharts-more.js"></script>
+        </head>
+        <body>
         <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
-    <script type="text/javascript">
+        <script type="text/javascript">
 
-    //Loads sentiment Data with given searchText
-    loadSentimentData("$HPQ");
+        //Loads sentiment Data with given searchText
+        loadSentimentData("$HPQ");
 
-    function loadSentimentData(searchTxt){
+        function loadSentimentData(searchTxt){
         //Makes GET request to Servlet
         $.getJSON( "SentimentDataRetriever", { searchText: searchTxt})
         .done(function( data ) {
             var tweetSentimentData = [];
               $.each( data, function( i, tweetSentiment ) {
-                  tweetSentimentData.push([tweetSentiment.CREATED_AT,tweetSentiment.AGG_SCORE]);
+                          tweetSentimentData.push([tweetSentiment.CREATED_AT,tweetSentiment.AGG_SCORE]);
               });
             $(function () {
                 $('#container').highcharts({
@@ -483,10 +477,10 @@ Add following files to the project.
                 });
             });
         });
-    };
-    </script>
-    </body>
-    </html>
+        };
+        </script>
+        </body>
+        </html>
 
 Running the application upon opening "index.html" would produce a graph on Tweets Sentiment over the timeline.
 
