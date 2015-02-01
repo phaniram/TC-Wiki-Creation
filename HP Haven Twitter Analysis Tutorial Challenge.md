@@ -261,11 +261,11 @@ Add following files to the project.
 
 - Create "**App.java**". Replace
 		    
-        CONSUMER_KEY -> Consumer Key (API Key)	
-        CONSUMER_SECRET -> Consumer Secret (API Secret)	
-        ACCESS_TOKEN -> Access Token	
-        ACCESS_TOKEN_SECRET -> Access Token Secret	
 
+_CONSUMERKEY -> Consumer Key (API Key)	
+CONSUMERSECRET -> Consumer Secret (API Secret)	
+ACCESSTOKEN -> Access Token	
+ACCESSTOKENSECRET -> Access Token Secret_
 
 
 
