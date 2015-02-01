@@ -424,7 +424,7 @@ Add following files to the project.
 - Create "**index.html**" in WebContent folder
 
 
-<!DOCTYPE html>
+    <!DOCTYPE html>
     <html>
     <head>
     <meta charset="UTF-8">
