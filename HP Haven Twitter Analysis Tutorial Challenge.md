@@ -23,7 +23,7 @@ This is a guide to teach you how to use IdolOnDemand SentimentAnalysis API on Tw
 5. Create table "**TWEET_SENTIMENT**" on "**TWIT_DB**" with following script
 
 
-	CREATE TABLE IF NOT EXISTS TWEET_SENTIMENT (
+        CREATE TABLE IF NOT EXISTS TWEET_SENTIMENT (
 		ID INTEGER NOT NULL PRIMARY KEY,
 		CREATED_AT TIMESTAMP NOT NULL,
 		TEXT VARCHAR(300),
@@ -31,7 +31,7 @@ This is a guide to teach you how to use IdolOnDemand SentimentAnalysis API on Tw
 		SCREEN_NAME VARCHAR(50) NOT NULL,
 		AGG_SENTIMENT VARCHAR(15),
 		AGG_SCORE VARCHAR(30)
-	)
+        )
 
 ## TweetSentiment App
 
@@ -45,16 +45,16 @@ Add following files to the project.
 
 
 
-    import java.sql.Connection;
-    import java.sql.DriverManager;
-    import java.sql.ResultSet;
-    import java.sql.SQLException;
-    import java.sql.Statement;
+        import java.sql.Connection;
+        import java.sql.DriverManager;
+        import java.sql.ResultSet;
+        import java.sql.SQLException;
+        import java.sql.Statement;
 
-    /*
-     * HelperClass for making DBConnections to VerticaDB
-     */
-    public class VerticaDBUtil {
+        /*
+        * HelperClass for making DBConnections to VerticaDB
+        */
+        public class VerticaDBUtil {
 
         private static Connection conn;
         private static final String DB_DRIVER = "com.vertica.jdbc.Driver";
@@ -146,6 +146,7 @@ Add following files to the project.
 - Create "**TweetSentimentTabUtil.java**"   
 
 
+
     import java.sql.Connection;
     import java.sql.PreparedStatement;
     import java.sql.ResultSet;
@@ -183,24 +184,6 @@ Add following files to the project.
                 VerticaDBUtil.closeDBUtil(null, pstmt, conn);
                 return result;
             }
-        
-        public static void main(String args[])
-        {
-            String sql = "SELECT * FROM TWEET_SENTIMENT";
-            Connection conn;
-            try {
-                conn = VerticaDBUtil.getDBConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql);
-                while (rs.next()) {
-                    System.out.println(rs.getDate("CREATED_AT"));
-                    System.out.println(rs.getDate("CREATED_AT").getTime());             
-                }
-                VerticaDBUtil.closeDBUtil(rs, stmt, conn);      
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }   
     }
 
 
