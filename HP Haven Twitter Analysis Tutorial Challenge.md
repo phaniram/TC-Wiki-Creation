@@ -259,13 +259,11 @@ This is a guide to teach you how to use IdolOnDemand SentimentAnalysis API on Tw
 
 
 - Create "**App.java**". Replace
-		    
 
-CONSUMER_KEY -> Consumer Key (API Key)	
-CONSUMER_SECRET -> Consumer Secret (API Secret)	 
-ACCESS_TOKEN -> Access Token	
-ACCESS_TOKEN_SECRET -> Access Token Secret  
-
+  CONSUMER_KEY -> Consumer Key (API Key)	
+  CONSUMER_SECRET -> Consumer Secret (API Secret)	 
+  ACCESS_TOKEN -> Access Token	
+  ACCESS_TOKEN_SECRET -> Access Token Secret  
 
 
         import java.util.ArrayList;
