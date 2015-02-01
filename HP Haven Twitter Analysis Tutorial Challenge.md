@@ -19,8 +19,21 @@ This is a guide to teach you how to use IdolOnDemand SentimentAnalysis API on Tw
       Consumer Secret (API Secret)	
       Access Token	
       Access Token Secret	
+4. Create a Database "**TWIT_DB**" Vertica.
+5. Create table "**TWEET_SENTIMENT**" on "**TWIT_DB**" with following script
 
-## Sample App
+
+	CREATE TABLE IF NOT EXISTS TWEET_SENTIMENT (
+		ID INTEGER NOT NULL PRIMARY KEY,
+		CREATED_AT TIMESTAMP NOT NULL,
+		TEXT VARCHAR(300),
+		SEARCH_TEXT VARCHAR(25),
+		SCREEN_NAME VARCHAR(50) NOT NULL,
+		AGG_SENTIMENT VARCHAR(15),
+		AGG_SCORE VARCHAR(30)
+	)
+
+## TweetSentiment App
 
 1. Create a new "Dynamic Web Project" in Eclipse   
 
@@ -492,8 +505,7 @@ Add following files to the project.
     </body>
     </html>
 
-Running the application upon opening "index.html" would produce graph like
-
+Running the application upon opening "index.html" would produce a graph on Tweets Sentiment over the timeline.
 
 
 
