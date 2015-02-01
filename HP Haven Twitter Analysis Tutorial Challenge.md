@@ -35,7 +35,7 @@ This is a guide to teach you how to use IdolOnDemand SentimentAnalysis API on Tw
 
 ## TweetSentiment App
 
-1. Create a new "Dynamic Web Project" in Eclipse   
+Create a new "Dynamic Web Project" in Eclipse   
 
   Add following files to the project.
 
