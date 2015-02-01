@@ -481,5 +481,6 @@ This is a guide to teach you how to use IdolOnDemand SentimentAnalysis API on Tw
 
 Running the application upon opening "index.html" would produce a graph on Tweets Sentiment over the timeline.
 
+![tweetsentimentgraph](https://cloud.githubusercontent.com/assets/231750/5991252/a912049e-aa07-11e4-907e-2b865b0d8c03.png)
 
 
