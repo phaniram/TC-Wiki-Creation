@@ -207,6 +207,35 @@ _Each tweet we retrieve and analyse , we'll be storing them each as a record in 
 			return latestId; 	                
 		}
 
+		//Get SentimentData for a searchText stored in DB
+		public JSONArray getSentimentData(String searchText) throws Exception{
+	        Connection conn = null;
+	        PreparedStatement pstmt = null;
+	        ResultSet rs = null;
+	        JSONArray tweetSentiments = new JSONArray();
+			try{
+			conn = VerticaDBUtil.getDBConnection();
+			//Fetch all the sentiment_data stored in vertica DB for analysis.
+			//SentimentData needs to be sorted by DateTime to be properly plotted in HighCharts.
+	        pstmt = conn.prepareStatement("SELECT * FROM TWEET_SENTIMENT WHERE SEARCH_TEXT = ? ORDER BY CREATED_AT ASC");
+	        pstmt.setString(1, searchText);
+	        rs = pstmt.executeQuery();
+	        //Get ResultSet formed as JSON response for use in HighCharts	        
+	        while (rs.next()) {
+	        	JSONObject tweetSentiment = new JSONObject();
+	        	tweetSentiment.put("SCREEN_NAME", rs.getString("SCREEN_NAME"));
+	        	tweetSentiment.put("CREATED_AT", rs.getTimestamp("CREATED_AT").getTime());
+	        	tweetSentiment.put("AGG_SENTIMENT", rs.getString("AGG_SENTIMENT"));
+	        	tweetSentiment.put("AGG_SCORE", Double.parseDouble(rs.getString("AGG_SCORE")));
+	        	tweetSentiment.put("TEXT", rs.getString("TEXT"));
+	        	tweetSentiments.add(tweetSentiment);
+	        }
+			} finally {
+	        	VerticaDBUtil.closeDBUtil(rs, pstmt, conn);  // Cleanup Resources	
+			}
+			return tweetSentiments;
+		}
+
         //Creates a Tweet Sentiment record
         public int createTweetSentimentEntry(Status tweet, String searchText, String sentiment, String score) throws Exception {
 	        Connection conn = null;
@@ -430,65 +459,41 @@ _Now we're done with tweet retrievals, sentiment analysis, storing. This Servlet
 - Create a new servlet "**SentimentDataRetriever.java**"  
 
 
-        import java.io.IOException;
-        import java.io.PrintWriter;
-        import java.sql.Connection;
-        import java.sql.PreparedStatement;
-        import java.sql.ResultSet;
-        import java.sql.SQLException;
-
-        import javax.servlet.ServletException;
-        import javax.servlet.annotation.WebServlet;
-        import javax.servlet.http.HttpServlet;
-        import javax.servlet.http.HttpServletRequest;
-        import javax.servlet.http.HttpServletResponse;
-
-        import org.json.simple.JSONArray;
-        import org.json.simple.JSONObject;
-
-        import com.cypronmaya.jdbc.VerticaDBUtil;
+		import java.io.IOException;
+		import java.io.PrintWriter;
+		import javax.servlet.ServletException;
+		import javax.servlet.annotation.WebServlet;
+		import javax.servlet.http.HttpServlet;
+		import javax.servlet.http.HttpServletRequest;
+		import javax.servlet.http.HttpServletResponse;
+		
+		import org.json.simple.JSONArray;
 
         //Servlet to retrieve SentimentData on given text.
         @WebServlet("/SentimentDataRetriever")
         public class SentimentDataRetriever extends HttpServlet {
         private static final long serialVersionUID = 1L;
 
-        public SentimentDataRetriever() {
-        }
-
-        @SuppressWarnings("unchecked")
-        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            //Fetch searchText Parameter
-            String searchText = request.getParameter("searchText");
-            Connection conn;
-            try {
-                conn = VerticaDBUtil.getDBConnection();
-                //Fetch all the sentiment_data stored in vertica DB for analysis.
-                //SentimentData needs to be sorted by DateTime to be properly plotted in HighCharts.
-                PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM TWEET_SENTIMENT WHERE SEARCH_TEXT = ? ORDER BY CREATED_AT ASC");
-                pstmt.setString(1, searchText);
-                ResultSet rs = pstmt.executeQuery();
-                JSONArray tweetSentiments = new JSONArray();
-                //Get ResultSet formed as JSON response for use in HighCharts           
-                while (rs.next()) {
-                    JSONObject tweetSentiment = new JSONObject();
-                    tweetSentiment.put("SCREEN_NAME", rs.getString("SCREEN_NAME"));
-                    tweetSentiment.put("CREATED_AT", rs.getTimestamp("CREATED_AT").getTime());
-                    tweetSentiment.put("AGG_SENTIMENT", rs.getString("AGG_SENTIMENT"));
-                    tweetSentiment.put("AGG_SCORE", Double.parseDouble(rs.getString("AGG_SCORE")));
-                    tweetSentiment.put("TEXT", rs.getString("TEXT"));
-                    tweetSentiments.add(tweetSentiment);
-                }
-                
-                VerticaDBUtil.closeDBUtil(rs, pstmt, conn);
-                response.setContentType("application/json");
-                 PrintWriter out = response.getWriter();
-                 out.print(tweetSentiments);
-                 out.flush();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }       
-        }
+		private static TweetSentimentTabUtil tweetDBUtil;
+	    public SentimentDataRetriever() {
+	    	tweetDBUtil = new TweetSentimentTabUtil();
+	    }
+	
+		@SuppressWarnings("unchecked")
+		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			//Fetch searchText Parameter
+			String searchText = request.getParameter("searchText");
+			JSONArray tweetSentiments = new JSONArray();
+			try {
+				tweetSentiments = tweetDBUtil.getSentimentData(searchText);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			response.setContentType("application/json");
+		    PrintWriter out = response.getWriter();
+		    out.print(tweetSentiments);
+		    out.flush();		
+		}
 
         protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             doGet(request,response);
