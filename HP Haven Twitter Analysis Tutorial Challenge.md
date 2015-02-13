@@ -1,17 +1,26 @@
 HP Haven Twitter Analysis Tutorial Challenge
 ================
 
-[Scenario] Let's say your company launched a product and wanted to know it's views in public. How do you go about it?
-[Behaviour] 
-SurveyMonkey? 
-People won't respond to surveys and also don't take much interest in taking it.
+**[Scenario]** 
+
+Let's say your company launched a product and wanted to know it's views in public. How do you go about it?
+
+**[Behaviour]** 
+
+_SurveyMonkey?_
+
+People won't respond to surveys and also don't take much interest in taking it unless you bribe them with gifts or sweepstakes.
+
 What if we can analyse public reviews available in twitter or facebook comments?
 
 Well, here's the tutorial to help you do that.
 
-In this tutorial we'll be creating a web application, which does sentiment analysis on public data i.e tweets through IDOLOnDemand SentimentAnalysis API and store the information in Vertica Instance, display it over the timeline.
-[Impact]
+In this tutorial we'll be creating a web application, which does sentiment analysis on public data i.e tweets through IDOLOnDemand SentimentAnalysis API and store the information in Vertica Instance, display it in nice Graph over the timeline.
+
+**[Impact]**
+
 You'll now know exactly what people are thinking about your product over the timeline of tweets about the product you launched. 
+
 Nice isn't it? Then let's start.
 
 
