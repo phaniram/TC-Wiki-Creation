@@ -370,6 +370,7 @@ _Our one source of reviews is tweets. To get them we'll be searching twitter on 
         public static void main(String[] args) {        
             String searchText = "$HPQ";
             Twitter twitter = TwitterFactory.getSingleton();
+			TweetSentimentTabUtil tweetDBUtil = new TweetSentimentTabUtil();
 
             //Set Twitter App Keys to authenticate and fetch tweets.
             AccessToken accessToken = new AccessToken(<ACCESS_TOKEN>, <ACCESS_TOKEN_SECRET>);
@@ -378,6 +379,14 @@ _Our one source of reviews is tweets. To get them we'll be searching twitter on 
 
             try {
             Query query = new Query(searchText);
+	 	    try {
+				long latestId = tweetDBUtil.getLatestTweetSentimentEntryID(searchText);
+				if(latestId!=-1){
+					query.setSinceId(latestId);
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
             QueryResult result;
             List<Status> totalTweets = new ArrayList<Status>();
                 do {
@@ -390,7 +399,6 @@ _Our one source of reviews is tweets. To get them we'll be searching twitter on 
                     }
                 } while ((query = result.nextQuery()) != null);
                 
-                TweetSentimentTabUtil tweetDBUtil = new TweetSentimentTabUtil();
                 IdolOnDemand idolOnDemand = new IdolOnDemand(); 
                 //Run sentiment Analysis on each tweet and store it as a record into vertica DB.
                 for(Status tweet : totalTweets)
