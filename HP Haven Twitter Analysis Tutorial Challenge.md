@@ -19,7 +19,7 @@ In this tutorial we'll be creating a web application, which does sentiment analy
 
 **[Impact]**
 
-You'll now know exactly what people are thinking about your product over the timeline of tweets about the product you launched. 
+You'll now know exactly what people are thinking about your product/stock symbol over the timeline of tweets about the product you launched/recent doings in stock market. 
 
 Nice isn't it? Then let's start.
 
