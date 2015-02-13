@@ -516,13 +516,24 @@ _Everything at hand, we need nice representation of our sentiments on tweets ove
         <script src="http://code.highcharts.com/highcharts-more.js"></script>
         </head>
         <body>
-        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
-        <script type="text/javascript">
-
-        //Loads sentiment Data with given searchText
-        loadSentimentData("$HPQ");
-
+		Search Text <input type="text" data-type="input-textbox" id="searchText" name="searchText" size="20" value="" />
+		<br/>
+		<label style="min-height: 13px;"> (it only fetches the data that is already stored in db) </label>		
+		   <br/>
+		   <button id="fetchBtn" type="submit">Submit</button>
+		   <br/>    
+		<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+		
+		<script type="text/javascript">
+			
+		$( document ).ready(function() {
+			$("#fetchBtn").click(function() {
+				var searchText = $("#searchText").val();
+				//Loads sentiment Data with given searchText
+				if(searchText.length>0)		loadSentimentData(searchText);
+			});
+		});
+		
         function loadSentimentData(searchTxt){
         //Makes GET request to Servlet
         $.getJSON( "SentimentDataRetriever", { searchText: searchTxt})
@@ -587,9 +598,9 @@ _Everything at hand, we need nice representation of our sentiments on tweets ove
         </body>
         </html>
 
-Running the application upon opening "index.html" would produce a graph on Tweets Sentiment over the timeline.
+Running the application upon opening "index.html" would give us a simple text box to enter info in. Just enter the "SearchText" we gathered data for and it will produce a graph on Tweets Sentiment over the timeline.
 
-![tweetsentimentgraph](https://cloud.githubusercontent.com/assets/231750/5991252/a912049e-aa07-11e4-907e-2b865b0d8c03.png)
+![tweetdatasentimentgraph](https://cloud.githubusercontent.com/assets/231750/6194487/dba64cd4-b3ea-11e4-839a-f0c9a3d5794e.png)
 
 Modify index.html to following 
 
