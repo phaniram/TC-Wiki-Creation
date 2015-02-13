@@ -303,7 +303,7 @@ Create a new "Dynamic Web Project" in Eclipse
         public class App {
 
         public static void main(String[] args) {        
-            String searchText = "$AMZN";
+            String searchText = "$HPQ";
             Twitter twitter = TwitterFactory.getSingleton();
 
             //Set Twitter App Keys to authenticate and fetch tweets.
