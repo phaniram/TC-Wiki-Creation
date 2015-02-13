@@ -40,8 +40,8 @@ Nice isn't it? Then let's start.
       Consumer Secret (API Secret)	
       Access Token	
       Access Token Secret	
-4. Create a Database "**TWIT_DB**" Vertica.
-5. Create table "**TWEET_SENTIMENT**" on "**TWIT_DB**" with following script
+4. Create a Database "**SOCIAL_SENTIMENT_REPO**" Vertica.
+5. Create table "**TWEET_SENTIMENT**" on "**SOCIAL_SENTIMENT_REPO**" with following script
 
 
         CREATE TABLE IF NOT EXISTS TWEET_SENTIMENT (
