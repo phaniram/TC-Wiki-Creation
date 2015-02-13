@@ -373,8 +373,12 @@ _Our one source of reviews is tweets. To get them we'll be searching twitter on 
                 for(Status tweet : totalTweets)
                 {
                     try {
-                        HashMap<String,String> resp = idolOnDemand.executeSentimentAnalysis(tweet.getText());               
-                        tweetDBUtil.createTweetSentimentEntry(tweet, searchText,resp.get("sentiment"), resp.get("score"));          
+					HashMap<String,String> langResp = idolOnDemand.identifyLanguage(tweet.getText());
+					String tweetLang = langResp.get("language_iso639_2b");
+					//If language is unidentified, treat it as english. ref: https://www.idolondemand.com/developer/apis/identifylanguage#response
+		        	if(tweetLang.equalsIgnoreCase("UND")) tweetLang = "ENG"; 
+		        	HashMap<String,String> resp = idolOnDemand.executeSentimentAnalysis(tweet.getText(),tweetLang);				
+		        	tweetDBUtil.createTweetSentimentEntry(tweet, searchText,resp.get("sentiment"), resp.get("score"));			
                     } catch (Exception e) {
                         e.printStackTrace();
                     }           
