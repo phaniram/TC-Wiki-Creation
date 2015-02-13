@@ -183,7 +183,30 @@ _Each tweet we retrieve and analyse , we'll be storing them each as a record in 
         //DAO for TweetSentiment Table in Vertica DB
 
         public class TweetSentimentTabUtil {
-        
+
+		//Get latest TweetID we pushed into DB
+		public long getLatestTweetSentimentEntryID(String searchText) throws Exception{
+	        Connection conn = null;
+	        Statement stmt = null;
+	        long latestId = 0;
+			String sql = "SELECT NVL(MAX(ID),-1) MAX_ID FROM TWEET_SENTIMENT WHERE SEARCH_TEXT = "+searchText;
+	        try{
+	        conn = VerticaDBUtil.getDBConnection();
+	        stmt = conn.createStatement();
+	        VerticaDBUtil.beginTransaction(); // Begin Transaction
+	        ResultSet rs = stmt.executeQuery(sql); // Execute Statement
+	        if (rs.next()) {
+	        	latestId = rs.getLong("MAX_ID");
+	        	VerticaDBUtil.commit(); // Commit Transaction
+	        } else {
+	        	VerticaDBUtil.rollback(); // Roleback Transaction
+	        }
+	        } finally {
+	        	VerticaDBUtil.closeDBUtil(null, stmt, conn);  // Cleanup Resources	
+			}
+			return latestId; 	                
+		}
+
         //Creates a Tweet Sentiment record
         public int createTweetSentimentEntry(Status tweet, String searchText, String sentiment, String score) throws Exception {
 	        Connection conn = null;
