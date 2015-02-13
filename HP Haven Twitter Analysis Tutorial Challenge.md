@@ -3,7 +3,7 @@ HP Haven Twitter Analysis Tutorial Challenge
 
 **[Scenario]** 
 
-Let's say your company launched a product and wanted to know it's views in public. How do you go about it?
+Let's say your company launched a product and wanted to know it's views in public or company has undergone some share market changes and to see what people views are on your stock symbol? How do you go about it?
 
 **[Behaviour]** 
 
@@ -60,10 +60,11 @@ Create a new "Dynamic Web Project" in Eclipse
 
   Add following files to the project.
 
+_To process tweets or comments and to maintain history of our analysis on them, we should be storing them. So, we'll use Vertica DB. This Class helps us to get a DB Connection to run our queries on VerticaDB._
+
 - Create "**VerticaDBUtil.java**"   
   Edit **DB_CONNECTION** according to your **VM_IP** and **VM_VERTICA_DB_NAME**.  
-  This Class helps us to get DB Connection to run queries on VerticaDB.
-
+    
 
         import java.sql.Connection;
         import java.sql.DriverManager;
@@ -163,6 +164,9 @@ Create a new "Dynamic Web Project" in Eclipse
         }
 
 
+_Each tweet we retrieve and analyse , we'll be storing them each as a record in a table, this is our perisistant storage, which can be used to retrieve and plot. This class helps us to insert our analyzed data along with supporting information into VerticaDB._
+
+
 - Create "**TweetSentimentTabUtil.java**"   
 
 
@@ -203,6 +207,9 @@ Create a new "Dynamic Web Project" in Eclipse
                 return result;
             }
             }
+
+
+_Now we need to analyse sentiment on the tweets we retrieve, to do that we will be passing tweet data to IDOLOnDemand SentimentAnalysis API. This class helps us to pass tweet data to IDOLOnDemand SentimentAnalysis API and get sentiment aggregate,score for our use. More the positive, more the chance that our product/mark is having a good response in public._
 
 
 - Create "**IdolOnDemand.java**"    
@@ -278,6 +285,8 @@ Create a new "Dynamic Web Project" in Eclipse
         }
         }
 
+_Our one source of reviews is tweets. To get them we'll be searching twitter on some unique tag or hashkey which represents our newly launched product or stock symbol. Tweets retrieved here are passed to sentiment analysis, we'll be then storing the response and tweet information in VerticaDB._
+
 
 - Create "**App.java**". Replace
 
@@ -347,6 +356,9 @@ Create a new "Dynamic Web Project" in Eclipse
         }
 
 
+_Now we're done with tweet retrievals, sentiment analysis, storing. This Servlet helps us to retrieve the stored data from VerticaDB based on the search Text, to be used in Plotting Graph later._
+
+
 - Create a new servlet "**SentimentDataRetriever.java**"  
 
 
@@ -414,6 +426,8 @@ Create a new "Dynamic Web Project" in Eclipse
             doGet(request,response);
         }
         }
+
+_Everything at hand, we need nice representation of our sentiments on tweets over the timeline. I chose highcharts here (you're free to use any), so in this html we'll be making an ajax request to above servlet with a parameter and get data, and plot it in the timeline graph._
 
 
 - Create "**index.html**" in WebContent folder
@@ -524,4 +538,4 @@ You can now even see the tweet at that point, and screen name.
 
 ![tweetdatasentimentgraph](https://cloud.githubusercontent.com/assets/231750/5993354/ead2e5a8-aa73-11e4-9a85-30c1405c55f0.png)
 
-
+_Now you'll see during the period where your stock symbol making good impression in public with consecutive or max positives._
