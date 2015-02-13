@@ -186,25 +186,32 @@ _Each tweet we retrieve and analyse , we'll be storing them each as a record in 
         
         //Creates a Tweet Sentiment record
         public int createTweetSentimentEntry(Status tweet, String searchText, String sentiment, String score) throws Exception {
-                String sql = "INSERT INTO TWEET_SENTIMENT(ID,CREATED_AT,TEXT,SEARCH_TEXT,SCREEN_NAME,AGG_SENTIMENT,AGG_SCORE) VALUES(?, ?, ?, ?, ?, ?, ?)";
-                Connection conn = VerticaDBUtil.getDBConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-                pstmt.setLong(1, tweet.getId());
-                pstmt.setTimestamp(2, new java.sql.Timestamp(tweet.getCreatedAt().getTime()));
-                pstmt.setString(3, tweet.getText());
-                pstmt.setString(4, searchText);
-                pstmt.setString(5, tweet.getUser().getScreenName());
-                pstmt.setString(6, sentiment);
-                pstmt.setString(7, score);
-                VerticaDBUtil.beginTransaction();
-                int result = pstmt.executeUpdate();
-                if (result != 0) {
-                    VerticaDBUtil.commit();
-                } else {
-                    VerticaDBUtil.rollback();
-                }
-                VerticaDBUtil.closeDBUtil(null, pstmt, conn);
-                return result;
+	        Connection conn = null;
+	        PreparedStatement pstmt = null;
+	        try{
+	        conn = VerticaDBUtil.getDBConnection();
+	        String sql = "INSERT INTO TWEET_SENTIMENT(ID,CREATED_AT,TEXT,SEARCH_TEXT,SCREEN_NAME,AGG_SENTIMENT,AGG_SCORE) VALUES(?, ?, ?, ?, ?, ?, ?)";	        
+	        pstmt = conn.prepareStatement(sql);
+	        
+	        pstmt.setLong(1, tweet.getId());
+	        pstmt.setTimestamp(2, new java.sql.Timestamp(tweet.getCreatedAt().getTime()));
+	        pstmt.setString(3, tweet.getText());
+	        pstmt.setString(4, searchText);
+	        pstmt.setString(5, tweet.getUser().getScreenName());
+	        pstmt.setString(6, sentiment);
+	        pstmt.setString(7, score);
+	        
+	        VerticaDBUtil.beginTransaction(); // Begin Transaction
+	        int result = pstmt.executeUpdate(); // Execute Statement
+	        if (result != 0) {
+	        	VerticaDBUtil.commit(); // Commit Transaction
+	        } else {
+	        	VerticaDBUtil.rollback(); // Roleback Transaction
+	        }
+	        } finally {
+	        	VerticaDBUtil.closeDBUtil(null, pstmt, conn);  // Cleanup Resources	
+			} 	        
+
             }
             }
 
@@ -259,6 +266,32 @@ _Now we need to analyse sentiment on the tweets we retrieve, to do that we will 
                 return null;
             }
         }
+    
+	    
+	    //Identifies language of given text
+	    public HashMap<String, String> identifyLanguage(String text) {
+	        try {
+	        	HashMap<String,String> hmap = new HashMap<String,String>();
+	            String query = "https://api.idolondemand.com/1/api/sync/identifylanguage/v1" +
+	                    "?text=" + URLEncoder.encode(text, "UTF-8") +
+	                    "&apikey=" + apikey;
+	            
+	            String output = callApi(query);
+	            
+	            JSONObject obj = (JSONObject)JSONValue.parse(output);
+	            String language = (String)((JSONObject)obj).get("language");
+	            String language_iso639_2b = (String)((JSONObject)obj).get("language_iso639_2b");
+	            hmap.put("language", language);
+	            hmap.put("language_iso639_2b", language_iso639_2b);
+	            System.out.println(text + ", value: " + language);            
+	            return hmap;
+	        } catch(Exception ex) {
+	            ex.printStackTrace();
+	            return null;
+	        }
+	    }
+		
+	
         
         //Runs sentiment analysis on given text
         public HashMap<String, String> executeSentimentAnalysis(String text) {
